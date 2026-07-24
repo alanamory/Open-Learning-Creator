@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="theme-color" content="#2196f3">
+  <title>Open Learning Creator</title>
+  <link rel="stylesheet" href="framework7/css/framework7-bundle.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="framework7/css/framework7-icons.css">
+  <link href="css/bb2649.css" rel="stylesheet" id="theme-style" />
+  <link rel="stylesheet" href="css/app.min.css">
+</head>
+
+<body onload="doOnLoad();">
+  <input type="file" name="js-file" id="js-file" onchange="openDocument(event);" style="display:none;">
+  <label for="js-file" id='file-label'></label>
+  <input id="file-upload" type="file">
+  <div id="app">
+    <div class="view view-main">
+      <div id="progress" class="progress">
+        <div class="indeterminate"></div>
+      </div>
+      <div
+        style="padding:16px 0;top:0px;position:fixed;width:100%;z-index:10; width:100%; height:98px; background: linear-gradient(to bottom, var(--top-fader), transparent);position:relative;">
+        <div style="position:relative; width:100%; height:54px;">
+          <a class="panel-close play-btn" id="left-panel-in" onclick="leftPanelIn();"
+            style="top:14px;left:12px;position:absolute;color:black;font-size: 22px;">
+            <i class="bi bimenu bi-list-ul" style="font-size: 22px;margin:0;"></i>
+          </a>
+          <a class="panel-close play-btn" id="right-panel-in" onclick="rightPanelIn();"
+            style="top:14px;right:12px;position:absolute;color:black;font-size: 22px;color:rgb(181, 180, 180);pointer-events: none;">
+            <i class="bi bimenu bi-layout-text-sidebar-reverse" style="font-size: 22px;margin:0;"></i>
+          </a>
+          <div id="right-hide"
+            style="width:45px;height:45px;background:transparent; top:14px;right:64px;position:absolute;"></div>
+        </div>
+        <div style="display: flex;justify-content: center;">
+          <div id="inactive-buttons"
+            style="display:flex;border-width: 0;box-shadow: none;justify-content: center;width: fit-content;top: 0px;position: fixed;padding:8px;box-sizing:border-box;backdrop-filter: blur(10px) saturate(100%);-webkit-backdrop-filter: blur(17px) saturate(180%);background: rgba(255, 255, 255, 0.5);border-radius:20px;margin-top:26px;">
+            <button type="button" class="text-editor-button" style="color:silver" data-button="bold"><i
+                class="material-icons">format_bold</i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="italic"><i
+                class="material-icons">format_italic</i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="underline"><i
+                class="material-icons">format_underlined</i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="strikeThrough"><i
+                class="material-icons">strikethrough_s</i></button>
+            <div class="text-editor-button-divider"></div>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="orderedList"><i
+                class="material-icons">format_list_numbered</i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="unorderedList"><i
+                class="material-icons">format_list_bulleted</i></button>
+            <div class="text-editor-button-divider"></div>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="link"><i
+                class="material-icons">link</i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="newimg"><span
+                class="material-icons">image</span></button>
+            <div class="text-editor-button-divider"></div>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="h1"><i
+                class="icon">H<sub>1</sub></i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="h3"><i
+                class="icon">H<sub>2</sub></i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="h3"><i
+                class="icon">H<sub>3</sub></i></button>
+            <div class="text-editor-button-divider"></div>
+            <button type="button" class="text-editor-button" data-button="indent"><img
+                src="../img/leftindentg.svg"></button>
+            <button type="button" class="text-editor-button" data-button="outdent"><img
+                src="../img/rightindentg.svg"></button>
+            <div class="text-editor-button-divider"></div>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="alignLeft"><i
+                class="material-icons">format_align_left</i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="alignCenter"><i
+                class="material-icons">format_align_center</i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="alignRight"><i
+                class="material-icons">format_align_right</i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="alignJustify"><i
+                class="material-icons">format_align_justify</i></button>
+            <div class="text-editor-button-divider"></div>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="subscript"><i
+                class="icon">A<sub>1</sub></i></button>
+            <button type="button" class="text-editor-button" style="color:silver" data-button="superscript"><i
+                class="icon">A<sup>1</sup></i></button>
+            <button type="button" class="text-editor-button" data-button="hr"><img src="../img/lineg.png"></button>
+            <button type="button" class="text-editor-button" data-button="info"><img src="../img/infog.svg"></button>
+          </div>
+        </div>
+      </div>
+      <div id="leftPanel">
+        <div style="position:relative; width:100%; height:54px;">
+          <a href="#" onclick="leftPanelOut();" id="left-panel-out" class="play-btn"
+            style="top:7px;right:12px;position:absolute;color:black;font-size: 22px;">
+            <i class="bi bimenu bi-list-ul" style="font-size: 22px;margin:0;"></i>
+          </a>
+        </div>
+        <div style="position: absolute;top: 54px;height: calc(100% - 54px);width: 100%;overflow: auto;">
+          <ul class="menu">
+            <li><a href="#" class="pick-file" onclick="newDocument();"><i class="bi bimenu bi-plus-circle"></i></i>New
+                File</a></li>
+            <li><a href="#" class="pick-file" onclick="document.getElementById('file-label').click();"><i
+                  class="bi bimenu bi-arrow-up-right"></i></i>Open File</a></li>
+            <li><a href="#" class="save-file temp menu-inactive"><i class="bi bimenu bi-save"></i>Save File</a></li>
+            <li><a href="#" class="temp menu-inactive" onclick="addWebsite();"><i
+                  class="bi bimenu bi-download"></i>Download</a></li>
+            <li><a href='#' class="temp  menu-inactive" onclick="preview();"><i
+                  class="bi bimenu bi-link-45deg"></i>Prieview</a></li>
+            <li><a href="#" class="temp menu-inactive" onclick="addScorm();"><i
+                  class="bi bimenu bi-folder-symlink"></i>Export to SCORM</a></li>
+            <li><a href="#" class="temp menu-inactive" onclick="addPdf();"><i
+                  class="bi bimenu bi-file-pdf"></i></i>Print (PDF)</a></li>
+            </li>
+            <li style="border-top:1px solid var(--secondary_color);">
+              <a href="#" onclick="openGuide();"><i class="bi bimenu bi-journal-text"></i></i>Guide</a>
+            </li>
+            <li>
+              <a href="#" onclick="copywrite();"><i class="bi bimenu bi-info"></i>About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="rightPanel"
+        styless="right: calc(100% + 400px);width: 360px;top: 24px;bottom: 16px;margin: 0 14px;border: 1px solid rgba(255, 255, 255, 0.25);border-top: 1px solid rgba(255, 255, 255, 0.4);box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 4px 20px rgba(0, 0, 0, 0.5);background-color: var(--f7-page-bg-color);border-radius: 16px;position: fixed;z-index: 100;">
+        <div style="position:relative; width:100%; height:54px">
+          <a href="#" onclick="rightPanelOut();" class="play-btn" id="swith-right-out"
+            style="top:7px;left:12px;position:absolute;color:black;font-size: 22px;">
+            <i class="bi bimenu bi-layout-text-sidebar-reverse" style="margin:0;"></i>
+          </a>
+        </div>
+        <div style="position: absolute;top: 54px;height: calc(100% - 54px);width: 100%; overflow:auto;">
+          <div style="text-align: center;margin-top:16px;" style="margin:0;">Colours</div>
+          <ul class="menu">
+            <li>
+              <div style="display:flex;">
+                <div
+                  style="height:24px; width:20%; cursor:pointer;background-color:#bb2649; border-top-left-radius: 18px;"
+                  onclick="switchCSSFile('css/bb2649.css');"></div>
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#e91e63;"
+                  onclick="switchCSSFile('css/e91e63.css');"></div>
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#9c27b0;"
+                  onclick="switchCSSFile('css/9c27b0.css');"></div>
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#345689;"
+                  onclick="switchCSSFile('css/345689.css');"></div>
+                <div
+                  style="height:24px; width:20%; cursor:pointer;background-color:#2196f3; border-top-right-radius: 18px;"
+                  onclick="switchCSSFile('css/2196f3.css');"></div>
+              </div>
+              <div style="display:flex;">
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#486a30;"
+                  onclick="switchCSSFile('css/486a30.css');"></div>
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#4caf50;"
+                  onclick="switchCSSFile('css/4caf50.css');"></div>
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#008080;"
+                  onclick="switchCSSFile('css/008080.css');"></div>
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#f26522;"
+                  onclick="switchCSSFile('css/f26522.css');"></div>
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#8b645a; "
+                  onclick="switchCSSFile('css/8b645a.css');"></div>
+              </div>
+              <div style="display:flex;">
+                <div
+                  style="height:24px; width:20%; cursor:pointer;background-color:/*#421449*/#704258; border-bottom-left-radius: 18px;"
+                  onclick="switchCSSFile('css/421449.css');"></div>
+
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#B0BEAC;"
+                  onclick="switchCSSFile('css/aebba0.css');"></div>
+
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#D8DA4E;"
+                  onclick="switchCSSFile('css/d8dae4.css');"></div>
+                <div style="height:24px; width:20%; cursor:pointer;background-color:#d7472d;"
+                  onclick="switchCSSFile('css/d7472d.css');"></div>
+                <div
+                  style="height:24px; width:20%; cursor:pointer;background-color:#9BC2E2; border-bottom-right-radius: 18px;"
+                  onclick="switchCSSFile('css/9bc2e2.css');"></div>
+              </div>
+            </li>
+          </ul>
+          <div style="text-align: center;margin-top:16px;" style="margin:0;">Higher Education Colours</div>
+          <ul class="menu" style="font-size:11px;">
+            <li>
+              <div style="display:flex;">
+                <div style="border-top-left-radius: 18px;font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #0099cb" onclick="switchCSSFile('css/0099cb.css');">CPUT</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #255c91" onclick="switchCSSFile('css/255c91.css');">CUT</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #242853" onclick="switchCSSFile('css/242853.css');">MPU</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #054c64" onclick="switchCSSFile('css/054c64.css');">MUT</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #001333" onclick="switchCSSFile('css/001333.css');">NMU</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #6c3d91" onclick="switchCSSFile('css/6c3d91.css');">NWU</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #5f2167" onclick="switchCSSFile('css/5f2167.css');">RU</div>
+                <div style="border-top-right-radius: 18px;font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #325099" onclick="switchCSSFile('css/325099.css');">SFU</div>
+              </div>
+              <div style="display:flex;">
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #ca2637" onclick="switchCSSFile('css/ca2637.css');">SOL</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #61223b" onclick="switchCSSFile('css/61223b.css');">SU</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #005596" onclick="switchCSSFile('css/005596.css');">TUT</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #0195d7" onclick="switchCSSFile('css/0195d7.css');">UCT</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #112a43" onclick="switchCSSFile('css/112a43.css');">UFH</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #0f204b" onclick="switchCSSFile('css/0f204b.css');">UFS</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #f26522" onclick="switchCSSFile('css/f26522.css');">UJ</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #e10717" onclick="switchCSSFile('css/e10717.css');">UKZN</div>
+              </div>
+              <div style="display:flex;">
+                <div style="border-bottom-left-radius: 18px;font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #1b2642" onclick="switchCSSFile('css/1b2642.css');">UL</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #930010" onclick="switchCSSFile('css/930010.css');">UNISA</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #0061af" onclick="switchCSSFile('css/0061af.css');">UNIZUL</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #003087" onclick="switchCSSFile('css/003087.css');">UP</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #164174" onclick="switchCSSFile('css/164174.css');">UV</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #131e54" onclick="switchCSSFile('css/131e54.css');">UWC</div>
+                <div style="font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #022e6b" onclick="switchCSSFile('css/022e6b.css');">VUT</div>
+                <div style="border-bottom-right-radius: 18px;font-size:11px;text-align:center; color:white;line-height:24px; width:48px; cursor:pointer;background-color: #002f4a" onclick="switchCSSFile('css/002f4a.css');">WITS</div>
+              </div>
+            </li>
+          </ul>
+
+          <div id="multipage-items">
+            <div style="text-align: center;">Multi-page Course</div>
+            <ul class="menu">
+              <li id="module-1"><a href="#" onclick="newModule();"><i class="bi bimenu bi-body-text"></i>Add a
+                  Module</a></li>
+              <li><a href="#" onclick="newTab();"><i class="bi bimenu bi-segmented-nav"></i>Add a tab</a></li>
+              <li><a href="#" onclick="newSubsection();"><i class="bi bimenu bi-plus-circle-fill"></i>Add a tab
+                  subsection</a></li>
+            </ul>
+          </div>
+
+
+          <div style="text-align: center;">Components</div>
+          <ul class="menu">
+            <li><a href="#" onclick="newAbout();"><i class="bi bimenu bi-info-circle"></i>About</a></li>
+            <li><a href="#" onclick="newAccordian();"><i class="bi bimenu bi-chevron-expand"></i>Accordion</a></li>
+            <li><a href="#" onclick="newActivity();"><i class="bi bimenu bi-people"></i>Activity</a></li>
+            <li><a href="#" onclick="addTemplate();"><i class="bi bimenu bi-person-add"></i>Activity Group</a></li>
+            <li><a href="#" onclick="addBlock();"><i class="bi bimenu bi bi-app"></i>Block</a></li>
+            <li><a href="#" onclick="newCard();"><i class="bi bimenu bi-card-heading"></i>Card</a></li>
+            <li><a href="#" onclick="newCheckboxes();"><i class="bi bimenu bi-check2-circle"></i>Checkboxes</a></li>
+            <li><a href="#" onclick="newInformation();"><i class="bi bimenu bi-file-richtext"></i>Information</a></li>
+            <li><a href="#" onclick="newInsertHTML();"><i class="bi bimenu bi-filetype-html"></i>Insert HTML</a></li>
+            <li><a href="#" onclick="newQuotation();"><i class="bi bimenu bi-blockquote-left"></i>Quotation</a></li>
+            <li><a href="#" onclick="newMarginNote();"><i class="bi bimenu bi-box-arrow-in-right"></i>Margin note</a>
+            </li>
+            <li><a href="#" onclick="newNewsPrint();"><i class="bi bimenu bi-layout-split"></i>News print</a></li>
+            <li><a href="#" onclick="newNumberList();"><i class="bi bimenu bi-list-columns-reverse"></i>Number
+                list</a>
+            </li>
+            <li><a href="#" onclick="newPresentation();"><i class="bi bimenu bi-file-slides"></i>Presentation
+                (HTML)</a>
+            </li>
+            <li><a href="#" onclick="newMCQ();"><i class="bi bimenu bi-ui-checks"></i>Quiz (MCQ)</a></li>
+            <li><a href="#" onclick="newMatching();"><i class="bi bimenu bi-arrow-left-right"></i>Quiz (Matching
+                Pairs)</a></li>
+            <li><a href="#" onclick="newTrueFalse();"><i class="bi bimenu bi-ui-checks-grid"></i>Quiz (True/False)</a>
+            </li>
+            <li><a href="#" onclick="newRangeSlider();"><i class="bi bimenu bi-sliders"></i>Range Slider</a></li>
+            <li><a href="#" onclick="newReflection();"><i class="bi bimenu bi-arrow-repeat"></i>Reflection</a></li>
+            <li><a href="#" onclick="newReveal();"><i class="bi bimenu bi-search"></i>Reveal</a></li>
+            <li><a href="#" onclick="newResources();"><i class="bi bimenu bi-journals"></i>Resources</a></li>
+            <li><a href="#" onclick="newTimeline();"><i class="bi bimenu bi-calendar4-range"></i>Timeline</a></li>
+            <li><a href="#" onclick="newYouTube();"><i class="bi bimenu bi-youtube"></i>YouTube</a></li>
+          </ul>
+        </div>
+      </div>
+
+
+      <div classs="page-content"
+        style="overflow: auto; position: fixed; z-index: 1; top: 0; width: 100%;height: 100%;background-color: var(--f7-page-bg-color);">
+
+
+        <div id="allTheWidgets" style="height: 100%;position:relative; overflow: auto; ">
+          <div id="allwidgets" class="list-group col" style="overflow: hidden;margin-top: 32px;padding-top:130px;">
+            <div id="groupTitles" style="margin-bottom:16px;">
+              <div id="titleId"
+                style="font-weight: 300;text-align: center;font-size: 18pt;margin: 0 6px 16px;outline: none;"
+                contenteditable></div>
+              <div class="barcontainer">
+                <div class="bar"></div>
+              </div>
+              <div id="subtitleId" style="margin: -6px 0 28px;font-weight: 300;text-align: center;font-size: 16pt;"
+                contenteditable></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sheet-modal sheet-modal-push my-sheet-push" style="background-color: var(--card_color);">
+        <div class="toolbar">
+          <div class="toolbar-inner" style="background-color: var(--card_header);color:white;">
+            <div class="left" style="font-size: 18px; margin-left: 38px;font-weight: 400;">External Link
+            </div>
+            <div class="right">
+              <div class="close" onclick="app.sheet.close('.my-sheet-push');"></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin: 0 20px; background-color: var(--card_color);">
+          <div class="list no-hairline" style="margin:0;">
+            <ul>
+              <li>
+                <div class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Text to display</div>
+                    <div class="item-input-wrap"><input tabindex="-1" type="text" id="linklabel"
+                        placeholder="Enter a hyperlink label">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li id="input-1">
+                <div class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">External address</div>
+                    <div class="item-input-wrap"><input tabindex="-1" type="text" id="externalURL"
+                        placeholder="Enter an external hyperlink (https://contemporarylearninghub.co.za/index.html)">
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <input tabindex="-1" type="hidden" id="link-id" value="513969">
+            <div onclick="updateLink();"
+              style="display:inline-block;font-family:inherit;height:44px;background-color:black; color:white; border-radius: 4px; margin: 14px 0;box-shadow: inset 0 0 0 1px black;font-size: 0.8rem;letter-spacing: 0.2rem; padding: 0 1.25rem 0 1.35rem;line-height: 2.75rem;text-transform: uppercase;font-weight: 800;cursor:pointer;">
+              Continue</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-modal sheet-modal-push my-sheet-pedagogy">
+        <div class="toolbar" style="background-color:var(--card_header);">
+          <div class="toolbar-inner">
+            <div class="left"></div>
+            <div class="right"><a class="link sheet-close">Done</a></div>
+          </div>
+        </div>
+        <div class="sheet-modal-inner">
+          <div
+            style="width:80%;margin:0 10%;background-color:var(--card_color);top:68px;position:relative;height:100px;">
+            <div class="slidecontainer">
+              <div style="width:100%; text-align:center;"><b>Learning Approach</b></div>
+              <div style="max-width:720px; width: calc(100% - 40px); margin: 0 auto 16px; padding: 16px 0;"><input
+                  id="pedagogy" onchange="updatePedagogy();" type="range" min="1" max="3" value="0" step="1"
+                  class="range-style" list="markers"><datalist id="markers">
+                  <option value="1"></option>
+                  <option value="2"></option>
+                  <option value="3"></option>
+                </datalist>
+                <div style="position:relative; display:block; margin: 0 12.5px;">
+                  <div style="text-align: left; position: absolute; width: 180px; top: 0;left: 0;margin-left:-12.5px;"
+                    contenteditable="">Didactic teaching tools Transmitting information</div>
+                  <div
+                    style="color:black; text-align: center; position: absolute; width: 180px; left: 50%; top: 0; margin-left: -90px;"
+                    contenteditable="">Technologies as a mediator</div>
+                  <div
+                    style="text-align: right; position: absolute; width: 180px; top: 0;right: 0;margin-right:-12.5px;"
+                    contenteditable="">Transformative pedagogy Authentic student learning</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup popup-review popup-tablet-fullscreen" style="background-color: var(--f7-page-bg-color);">
+        <iframe style="width:100%; height:100%; border: 0;" id="prieviewFrame" src=""></iframe>
+        <a class="play-btn link popup-close" id="close"
+          style="top:32px;right:16px;position:absolute;font-size: 22px;z-index:1000;color:black;">
+          <i class="bi bimenu bi-x-circle" style="font-size: 22px;margin:0;"></i>
+        </a>
+      </div>
+
+      <div class="popup popup-reviews popup-tablet-fullscreen" style="background-color: var(--f7-page-bg-color);">
+        <div
+          style="cursor: url(https://contemporarylearninghub.co.za/img/dot.png), auto;padding: 16px 0 0; top: 0px;position: fixed;width: 100%;z-index: 10;width: 100%;height: 80px;background: linear-gradient(to bottom,  var(--top-fader), transparent);">
+          <div id="ptitleId"
+            style="font-weight: 400;text-align: center;font-size: 18pt;color:white;text-shadow: 0px 2px 4px rgba(0,0,0,0.85);">
+          </div>
+          <div class="barcontainer" style="display: block;">
+            <div class="bar" id="bars"></div>
+          </div>
+          <div id="psubtitleId"
+            style="margin:-6px 0 40px;font-weight: 400;text-align: center;font-size: 16pt;color:white;text-shadow: 0px 2px 4px rgba(0,0,0,0.85);"
+            contenteditable>
+          </div>
+        </div>
+        <a class="panel-close play-btn" id="leftpanelin" onclick="leftReviewPanelIn()"
+          style="top:34px;left:12px;position:absolute;color:black;font-size: 22px;z-index:120;">
+          <i class="bi bimenu bi-menu-app" style="font-size: 22px;position: relative;left:6px;"></i>
+        </a>
+        <a class="link play-btn" id="showabout" onclick="showAbout(0)"
+          style="top:34px;left:12px;position:absolute;color:black;font-size: 22px;z-index:120;">
+          <i class="bi bimenu  bi-info-circle" style="font-size: 22px;margin:0;"></i>
+        </a>
+        <div id="leftPanelPreview">
+          <div style="position:relative; width:100%; height:54px;">
+            <a href="#" onclick="leftPreviewPanelOut()" id="left-panel-out" class="play-btn"
+              style="top:7px;right:12px;position:absolute;color:black;font-size: 22px;">
+              <i class="bi bimenu bi-menu-app" style="font-size: 22px;margin:0;"></i>
+            </a>
+          </div>
+          <div style="position: absolute;top: 54px;height: calc(100% - 54px);width: 100%;overflow: auto;">
+            <ul class="menu" id="previewMenu">
+            </ul>
+          </div>
+        </div>
+
+        <a class="play-btn link popup-close" id="close"
+          style="top:32px;right:16px;position:absolute;font-size: 22px;z-index:1000;color:black;">
+          <i class="bi bimenu bi-x-circle" style="font-size: 22px;margin:0;"></i>
+        </a>
+        <div classs="page-content"
+          style="position: fixed; z-index: 1; top: 0; width: 100%;height: 100%;background-color: var(--f7-page-bg-color);">
+
+          <div class="newcontainer" style="display:none;">
+            <div class="newtabs">
+              <a href="#" class="newtab tab1" onclick="moveGlider(1, '0');" style="color:var(--secondary_color)">Tab
+                One</a>
+              <a href="#" class="newtab tab2" onclick="moveGlider(2, '100%');">Tab Two</a>
+              <a href="#" class="newtab tab3" onclick="moveGlider(3, '200%');">Tab Three</a>
+              <a href="#" class="newtab tab4" onclick="moveGlider(4, '300%');">Tab Four</a>
+              <a href="#" class="newtab tab5" onclick="moveGlider(5, '400%');">Tab Five</a>
+              <span class="newglider"></span>
+            </div>
+          </div>
+          <div id="allTheWidgets" style="height: 100%;position:relative; overflow: auto;overscroll-behavior: none;">
+            <div id="allwidgetscc" class="list-group col" style="overflow: hidden;margin-top: 32px;padding-top:130px;">
+              <div id="appPages" style="margin: 0 auto 36px;padding: 0; ">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sheet-modal sheet-modal-push upload-html" style="background-color: var(--card_color);">
+        <div class="toolbar">
+          <div class="toolbar-inner" style="background-color: var(--card_header);color:white;">
+            <div class="left" style="font-size: 18px; margin-left: 38px;font-weight: 400;">Upload HTML</div>
+            <div class="right">
+              <div onclick="app.sheet.close('.upload-html');"><i class="bi bi-x-circle"
+                  style="font-size:24px; color:white;padding-right:12px;cursor:pointer;"></i></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin: 0 20px; background-color: var(--card_color);">
+          <div style="margin: 16px; top: 28px; position: relative;">
+            <textarea id="html-content" placeholder="HTML"
+              style="width:100%; height:100px; border:1px solid #ddd"></textarea>
+          </div>
+          <input tabindex="-1" type="hidden" id="html-id" value="">
+          <div onclick="includeHTML();"
+            style="top: 10px;left: 16px;position: relative;display:inline-block;font-family:inherit;height:44px;background-color:black; color:white; border-radius: 4px; margin: 14px 0;box-shadow: inset 0 0 0 1px black;font-size: 0.8rem;letter-spacing: 0.2rem; padding: 0 1.25rem 0 1.35rem;line-height: 2.75rem;text-transform: uppercase;font-weight: 800;cursor:pointer;">
+            Continue</div>
+        </div>
+      </div>
+
+      <div class="sheet-modal sheet-modal-push sheet-mcq"
+        style="background-color: var(--card_color); height:fit-content;">
+        <div class="toolbar">
+          <div class="toolbar-inner" style="background-color: var(--card_header);color:white;">
+            <div class="left" style="font-size: 18px; margin-left: 38px;font-weight: 400;">MCQ Question Editor
+            </div>
+            <div class="right">
+              <div onclick="app.sheet.close('.sheet-mcq');"><i class="bi bi-x-circle"
+                  style="font-size:24px; color:white;padding-right:12px;cursor:pointer;"></i></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin: 0 20px; background-color: var(--card_color);">
+          <div class="list" style="margin: 16px; top: 0; position: relative;">
+            <div class="sheet-modal-inner">
+              <input tabindex="-1" type="hidden" id="mcqItemId" value="0">
+              <input tabindex="-1" type="hidden" id="mcqAction" value="0">
+              <input tabindex="-1" type="hidden" id="mcqId" value="0">
+              <input tabindex="-1" type="hidden" id="swiper" value="0">
+              <input tabindex="-1" type="hidden" id="kind" value="0">
+              <div class="list" style="margin-bottom: 0;">
+                <ul style="margin: 0 20px;" id="mcq-ul">
+                </ul>
+                <div onclick="updateMCQItem(document.getElementById('kind').value);"
+                  style="display:inline-block;font-family:inherit;height:44px;background-color:black; color:white; border-radius: 4px; margin: 14px 0 14px 20px;box-shadow: inset 0 0 0 1px black;font-size: 0.8rem;letter-spacing: 0.2rem; padding: 0 1.25rem 0 1.35rem;line-height: 2.75rem;text-transform: uppercase;font-weight: 800;cursor:pointer;">
+                  Continue</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-modal sheet-modal-push sheet-truefalse"
+        style="background-color: var(--card_color); height:fit-content;">
+        <div class="toolbar">
+          <div class="toolbar-inner" style="background-color: var(--card_header);color:white;">
+            <div class="left" style="font-size: 18px; margin-left: 38px;font-weight: 400;">True False Editor
+            </div>
+            <div class="right">
+              <div onclick="app.sheet.close('.sheet-truefalse');"><i class="bi bi-x-circle"
+                  style="font-size:24px; color:white;padding-right:12px;cursor:pointer;"></i></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin: 0 20px; background-color: var(--card_color);">
+          <div class="list" style="margin: 16px; top: 0; position: relative;">
+            <div class="sheet-modal-inner">
+              <input tabindex="-1" type="hidden" id="truefalse-id" value="0">
+              <div class="list" style="margin-bottom: 0;">
+                <ul style="margin: 0 20px;" id="tf-ul">
+                  <li id="tf-item-0" class="item-content item-input tf-item">
+                    <div class="item-media">
+                      <div class="mt-ios-teal"><input class="tf-radio" id="0" type="checkbox" checked=""><label
+                          for="0"></label></div>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-input-wrap"> <input
+                          value="Formative assessments provide support for learning and teaching" class="tf-value"
+                          type="text" id="tf-0" placeholder="Statement"></div>
+                    </div><button onclick="deleteTrueFalse(0)" title="Delete item" class="button button-round"
+                      style="position: absolute;width: 60px;right: -6px;"><i class="material-icons"
+                        style="color:var(--f7-radio-active-color);">cancel</i></button>
+                  </li>
+                  <li id="tf-item-1" class="item-content item-input tf-item">
+                    <div class="item-media">
+                      <div class="mt-ios-teal"><input class="tf-radio" id="1" type="checkbox"><label for="1"></label>
+                      </div>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-input-wrap"> <input
+                          value="Summative assessments are more valid assessments because they carry a high weighting towards a final mark"
+                          class="tf-value" type="text" id="tf-1" placeholder="Statement"></div>
+                    </div><button onclick="deleteTrueFalse(1)" title="Delete item" class="button button-round"
+                      style="position: absolute;width: 60px;right: -6px;"><i class="material-icons"
+                        style="color:var(--f7-radio-active-color);">cancel</i></button>
+                  </li>
+                  <li id="addTFOption" class="item-content item-input">
+                    <div class="item-inner">Add Statement<button onclick="addBlankTFOption()" title="Add statement"
+                        class="button button-round" style="position: absolute;width: 60px;right: -6px;"><i
+                          class="material-icons" style="color:var(--f7-radio-active-color);">add_circle</i></button>
+                    </div>
+                  </li>
+                </ul>
+                <div onclick="updateTFItem();"
+                  style="display:inline-block;font-family:inherit;height:44px;background-color:black; color:white; border-radius: 4px; margin: 14px 0 14px 20px;box-shadow: inset 0 0 0 1px black;font-size: 0.8rem;letter-spacing: 0.2rem; padding: 0 1.25rem 0 1.35rem;line-height: 2.75rem;text-transform: uppercase;font-weight: 800;cursor:pointer;">
+                  Continue</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-modal sheet-modal-push upload-presentation" style="background-color: var(--card_color);">
+        <div class="toolbar">
+          <div class="toolbar-inner" style="background-color: var(--card_header);color:white;">
+            <div class="left" style="font-size: 18px; margin-left: 38px;font-weight: 400;">Upload Presentation
+            </div>
+            <div class="right">
+              <div onclick="app.sheet.close('.upload-presentation');"><i class="bi bi-x-circle"
+                  style="font-size:24px; color:white;padding-right:12px;cursor:pointer;"></i></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin: 0 20px; background-color: var(--card_color);">
+          <div style="margin: 16px; top: 38px; position: relative;">
+            <div id="dropbox" style="margin: 0;" ondragenter="onDragEnter(this);" ondragleave="onDragLeaver(this);">
+              Drop a Mac Keynote Zip file (.zip) that includes your html presentation files.</div>
+            <div id="theprogress"
+              style="position:relative;width:0%; height:4px; background:var(--secondary_color); line-height:2px; top:1px;">
+            </div>
+          </div>
+          <input tabindex="-1" type="hidden" id="presentation-id" value="">
+          <div onclickss="updateReference();"
+            style="top: 40px;left: 16px;position: relative;display:inline-block;font-family:inherit;height:44px;background-color:black; color:white; border-radius: 4px; margin: 14px 0;box-shadow: inset 0 0 0 1px black;font-size: 0.8rem;letter-spacing: 0.2rem; padding: 0 1.25rem 0 1.35rem;line-height: 2.75rem;text-transform: uppercase;font-weight: 800;cursor:pointer;">
+            Continue</div>
+        </div>
+
+      </div>
+      <div id="module-cover">
+        <div
+          style="text-align: center; bottom: 54px; position: absolute; width: 100%; font-size: 22px; font-weight: 400;">
+          Create</div>
+        <div class="bar" style="bottom:54px; height:1px;"></div>
+        <img src="../img/logo.png" style="width: 120px;position: absolute;bottom: 10px;left: calc(50% - 60px);">
+        <div class="login" id="otpLogin"></div>
+      </div>
+
+
+      </div>
+      <div style="display:none;">
+        <input id="file" type="file">
+        <button id="upload">Upload</button>
+        <iframe width="100" height="100" id="downloadControl" src=""></iframe>
+      </div>
+
+      <script src="framework7/js/framework7-bundle.min.js"></script>
+      <script src="js/md5.js"></script>
+      <script type="text/javascript" src="js/app.min.js"></script>
+      <script type="text/javascript" src="js/output.min.js"></script>
+      <script>
+      </script>
+</body>
+
+</html>
