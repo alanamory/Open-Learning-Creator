@@ -2250,29 +2250,6 @@ input[type=range] {
             </div>
 
 
-            <!--a class="panel-close play-btn" id="leftpanelin" onclick="leftPanelIn()"
-                style="top: 34px; left: 12px; position: absolute; color: black; font-size: 22px; z-index: 120;">
-                <i class="bi bimenu bi-list-ul" style="font-size: 22px;position: relative;left:6px;"></i>
-            </a>
-            <div id="leftPanel">
-                <div style="position:relative; width:100%; height:54px;">
-
-                    <a href="#" onclick="leftPanelOut()" id="left-panel-out" class="play-btn"
-                        style="top:7px;right:12px;position:absolute;color:black;font-size: 22px;">
-                        <i class="bi bimenu bi-list-ul" style="font-size: 22px;margin:0;"></i>
-                    </a>
-                </div>
-                <div style="position: absolute;top: 54px;height: calc(100% - 54px);width: 100%;overflow: auto;">
-                    <ul class="menu" id="previewMenu">
-                        menuitems
-                    </ul>
-                </div>
-            </div-->
-
-            <!--a onclick="parent.closePreview()" id="close"
-                style="top:32px;right:16px;position:absolute;font-size: 22px;z-index:1000;color:black;">
-                <i class="bi bimenu bi-x-circle" style="font-size: 22px;margin:0;"></i>
-            </a-->
             <div classs="page-content"
                 style="position: fixed; z-index: 1; top: 0; width: 100%;height: 100%;background-color: var(--f7-page-bg-color);">
                 <div class="newcontainer" style="display: flex;">
@@ -2310,13 +2287,7 @@ input[type=range] {
         var mainView = app.views.create('.view-main');
 
         function doOnload() {
-            //var pages = document.getElementsByClassName('apage');
-            //if (pages[0].innerHTML === '') {
-            //    document.getElementsByClassName('menuPanel')[0].click();
-            //    leftPanelOut();
-            //}
             initSwipers();
-
             document.getElementById('allTheWidgets').scrollTop = 0;
             document.getElementById('module-cover').style.opacity = '0';
             setTimeout(function () {
@@ -2324,6 +2295,31 @@ input[type=range] {
                     document.getElementById('module-cover').style.display = 'none';
                 }, 1000);
             }, 500);
+        }
+
+        function initSwipers() {
+            var swipers = document.getElementsByClassName('swiper-container');
+            for (var i=0; i<swipers.length;i++) {
+                var id = swipers[i].id;
+                app.swiper.create('.swiper-quiz-'+id, {
+                    speed: 400,
+                    preventClicks: false,
+                    preventClicksPropagation: true,
+                    allowTouchMove: false,
+                    spaceBetween: 100,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                        renderBullet: function (index, className) {
+                            return '<span class="' + className + '">' + (index + 1) + '</span>';
+                        },
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+            }
         }
 
         function manageEditor(id) {
@@ -2340,27 +2336,7 @@ input[type=range] {
             ],
         })*/
 
-    function initSwipers() {
     
-    app.swiper.create('.swiper-quiz', {
-        speed: 400,
-        preventClicks: false,
-        preventClicksPropagation: true,
-        allowTouchMove: false,
-        spaceBetween: 100,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-            renderBullet: function (index, className) {
-                return '<span class="' + className + '">' + (index + 1) + '</span>';
-            },
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-    });
-}
 
         function doShowAbout() {
             const currentYear = new Date().getFullYear();

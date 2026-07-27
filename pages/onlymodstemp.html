@@ -1904,13 +1904,7 @@
         var mainView = app.views.create('.view-main');
 
         function doOnload() {
-            var clicking = document.getElementsByClassName('item-link');
-            for (var i = 0; i < clicking.length; i++) {
-                clicking[i].click();
-                clicking[i].click();
-            }
-
-
+            initSwipers();            
             document.getElementById('allTheWidgets').scrollTop = 0;
             document.getElementById('module-cover').style.opacity = '0';
             setTimeout(function () {
@@ -1920,19 +1914,34 @@
             }, 500);
         }
 
+        function initSwipers() {
+            var swipers = document.getElementsByClassName('swiper-container');
+            for (var i=0; i<swipers.length;i++) {
+                var id = swipers[i].id;
+                app.swiper.create('.swiper-quiz-'+id, {
+                    speed: 400,
+                    preventClicks: false,
+                    preventClicksPropagation: true,
+                    allowTouchMove: false,
+                    spaceBetween: 100,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                        renderBullet: function (index, className) {
+                            return '<span class="' + className + '">' + (index + 1) + '</span>';
+                        },
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+            }
+        }
+
         function manageEditor(id) {
             //
         }
-
-        /*var dialog = app.dialog.create({
-            title: 'Copyright and Licencing',
-            text: '</p><strong class="">[[copyTitle]]</strong><br><strong> [[institution]]</strong><p></p><div class="cc-icons"><img style="width: 28px;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC"><img style="width: 28px;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY"><img style="width: 28px;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC"></div><p>This work is licenced under a Creative Commons Attribution 4.0 International Licence (http://creativecommons.org/licenses/by/4.0/). This means you are free to share (copy and redistribute the material in any medium or format) and adapt it (remix, transform, and build upon the material) for any purpose as long as you give appropriate credit, with a link to your source, and indicate if changes were made. You may not use the material for commercial purposes</p>',
-            buttons: [
-                {
-                    text: "Close&nbsp;&nbsp;",
-                },
-            ],
-        })*/
 
 
 

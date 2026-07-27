@@ -1655,13 +1655,7 @@
         var mainView = app.views.create('.view-main');
 
         function doOnload() {
-            var clicking = document.getElementsByClassName('item-link');
-            for (var i = 0; i < clicking.length; i++) {
-                clicking[i].click();
-                clicking[i].click();
-            }
-
-
+            initSwipers();
             document.getElementById('allTheWidgets').scrollTop = 0;
             document.getElementById('module-cover').style.opacity = '0';
             setTimeout(function () {
@@ -1671,6 +1665,31 @@
             }, 500);
 
 
+        }
+
+        function initSwipers() {
+            var swipers = document.getElementsByClassName('swiper-container');
+            for (var i=0; i<swipers.length;i++) {
+                var id = swipers[i].id;
+                app.swiper.create('.swiper-quiz-'+id, {
+                    speed: 400,
+                    preventClicks: false,
+                    preventClicksPropagation: true,
+                    allowTouchMove: false,
+                    spaceBetween: 100,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                        renderBullet: function (index, className) {
+                            return '<span class="' + className + '">' + (index + 1) + '</span>';
+                        },
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+            }
         }
 
         function manageEditor(id) {
