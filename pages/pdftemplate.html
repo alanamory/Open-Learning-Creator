@@ -8,11 +8,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <title></title>
     <style>
-        [[root]] body {
+        [[root]] 
+        
+        body {
             margin: 0;
             padding: 0;
             font-family: "Roboto", sans-serif, prince-no-fallback;
             font-size: 14pt;
+            font-weight: 300;
             color: var(--color);
             line-height: 1.5;
             counter-reset: section 0;
@@ -21,9 +24,7 @@
             overflow: auto !important;
         }
 
-        /*.front {
-            page: front;
-        }*/
+
 
         @media print {
             @page {
@@ -115,83 +116,6 @@
             box-shadow: none;
             margin-left: -633px;
         }
-
-        /*.timeline-item-divider:before {
-            bottom: 100%;
-        }
-
-
-
-
-        .timeline-item-divider:after {
-            top: 100%;
-        }
-
-
-        .timeline-item-divider:after, .timeline-item-divider:before {
-            content: ' ';
-            width: 1px;
-            height: 100vh;
-            position: absolute;
-            left: 50%;
-            background: inherit;
-            transform: translate3d(-50%, 0, 0);
-        }
-
-        .timeline {
-            box-sizing: border-box;
-            margin: 32px 0;
-            padding: 0 16px;
-            padding-top: 0;
-            padding-bottom: 0;
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-
-        .timeline-item-date {
-            flex-shrink: 0;
-            width: 50px;
-            text-align: right;
-            box-sizing: border-box;
-        }
-
-        .timeline-item {
-            display: flex;
-            justify-content: flex-start;
-            overflow: hidden;
-            box-sizing: border-box;
-            position: relative;
-            padding: 2px 0px 16px;
-        }
-
-        .timeline-item:last-child {
-            padding-bottom: 2px;
-        }
-
-        .timeline-item-divider {
-            background: var(--secondary_color) !important;
-            position: relative;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
-            margin: 3px 16px;
-        }
-
-        .timeline-item-inner {
-            background: white !important;
-            box-sizing: border-box;
-            border-radius: 7px;
-            padding: 8px 16px;
-            box-shadow: 0px 1px 2px rgb(0 0 0 / 15%);
-        }
-
-        .timeline-item-content {
-            margin: 2px;
-            min-width: 0;
-            position: relative;
-            flex-shrink: 10;
-        }*/
 
         .timelinea {
             margin: 0 auto;
@@ -1174,9 +1098,7 @@
             height: 30px;
             padding: 1px;
             background-color: var(--secondary_color);
-            /*background-image: linear-gradient(-45deg, var(--color-lighten), transparent);*/
             border-radius: 50%;
-            /*box-shadow: -1px -1px 2px white, 1px 1px 2px rgba(0, 0, 0, 0.3);*/
             margin-top: 5px;
             z-index: 10001;
         }
@@ -1184,7 +1106,6 @@
         .range-style::-moz-range-track {
             display: flex;
             align-items: center;
-            /*top: -15px;*/
             height: 30px;
             border-radius: 30px;
             background-color: silver;
@@ -1200,9 +1121,7 @@
             width: 30px;
             height: 30px;
             background-color: var(--secondary_color);
-            /*background-image: linear-gradient(-45deg, var(--color-lighten), transparent);*/
             border-radius: 50%;
-            /*box-shadow: -1px -1px 2px white, 1px 1px 2px rgba(0, 0, 0, 0.3);*/
             z-index: 10001;
         }
 
@@ -1526,7 +1445,6 @@
         .activity-bar {
             position: fixed;
             text-align: center;
-
             top: 154px !important;
             left: calc(50% - 220px) !important;
             width: 420px !important;
@@ -1556,8 +1474,6 @@
             color: #000;
             background-color: rgba(0, 0, 0, 0.2);
             cursor: pointer;
-
-
         }
 
         .activity-bar-item-active {
@@ -1898,24 +1814,21 @@
     </div>
     <div
         style="position:absolute;top:260mm;font-size: 12pt;font-style: italic; width: 100%; display: flex;justify-content: center; align-items: center;">
-        Published by Contemporary Learning Hub
+        <img src="../../img/logo.png" style="width: 120px;position: absolute;bottom: 10px;left: calc(50% - 60px);">
     </div>
 
     <div style="page-break-before: always"></div>
 
 
-    <div style="max-width:720px; width: calc(100% - 40px); margin: 0 auto 16px; padding: 8px 0;">
-        <div style="position:relative;">
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <div style="padding-top: 8px;font-size: 14px;">&copy; [[date]] <b>[[institution]]</b>. This work is licensed
+    <div style="max-width:720px; width: calc(100% - 40px); margin: calc(227mm - 35mm) auto; padding: 8px 0;position:relative;">
+            <div style="padding-top: 8px;font-size: 14pt; font-weight:400;">
+                &copy; [[date]] <b>[[institution]]</b>. This work is licensed
                 under a <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" class="external">Creative Commons Attribution</a> 
-                <span class="cc"></span><span class="by"></span><span class="nc"></span> 4.0 International Licence. The style was adapted to the <b>Contemporary Learning Design</b> website style and minor chages were made. <br><br>You are free to <b>share</b> (copy and redistribute the material in any medium or format) and <b>adapt</b> (remix, transform, and build upon the material), provided that appropriate credit is given to the source, a link to the licence is included, and any changes made are indicated. <b>This material may not be used for commercial purposes. <br><br>First published: 2026</b>.
-                </div>
-
-        </div>
+                <span class="cc"></span><span class="by"></span><span class="nc"></span> 4.0 International Licence. The style was adapted to the <b>Contemporary Learning Design</b> website style and minor chages were made. <br><br>You are free to <b>share</b> (copy and redistribute the material in any medium or format) and <b>adapt</b> (remix, transform, and build upon the material), provided that appropriate credit is given to the source, a link to the licence is included, and any changes made are indicated. <b>This material may not be used for commercial purposes.
+            </div>
     </div>
-    <div class="newcontent" style="font-size:14px;color:var(--color);">
+    
+    <div class="newcontent" style="font-size:14pt;color:var(--color);">
         [[content]]
     </div>
 </body>
